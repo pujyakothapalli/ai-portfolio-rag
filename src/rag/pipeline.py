@@ -28,8 +28,19 @@ def query(question: str, verbose: bool = False) -> dict:
 
     # Step 1 — classify query
     classification = classify_query(question)
-    strategy = classification.get("retrieval_strategy", "hybrid")
-    top_k = classification.get("top_k", 5)
+
+    # Deterministic routing based on query type
+    routing_map = {
+        "FACTUAL":        {"strategy": "dense",  "top_k": 3},
+        "ANALYTICAL":     {"strategy": "hybrid", "top_k": 7},
+        "SUMMARIZATION":  {"strategy": "hybrid", "top_k": 7},
+        "CONVERSATIONAL": {"strategy": "dense",  "top_k": 3},
+    }
+
+    query_type = classification.get("query_type", "FACTUAL")
+    routing = routing_map.get(query_type, {"strategy": "hybrid", "top_k": 5})
+    strategy = routing["strategy"]
+    top_k = routing["top_k"]
 
     if verbose:
         print(f"Query type: {classification['query_type']}")
