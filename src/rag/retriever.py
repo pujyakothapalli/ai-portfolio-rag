@@ -3,13 +3,15 @@ import chromadb
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 from typing import List, Dict
-import streamlit as st
 
-@st.cache_resource
-def load_embedding_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+_model = None
 
-model = load_embedding_model()
+def get_model():
+    global _model
+    if _model is None:
+        from sentence_transformers import SentenceTransformer
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _model
 
 class HybridRetriever:
     def __init__(self, collection_name: str = "rag_store"):
@@ -32,7 +34,7 @@ class HybridRetriever:
     def add_documents(self, chunks: List[str], source: str):
         if not chunks:
             return
-        embeddings = model.encode(chunks).tolist()
+        embeddings = get_model().encode(chunks).tolist()
         start_id = self.collection.count()
         self.collection.add(
             documents=chunks,
@@ -48,7 +50,7 @@ class HybridRetriever:
         print(f"Added {len(chunks)} chunks. Total: {self.collection.count()}")
 
     def dense_retrieve(self, query: str, top_k: int = 5) -> List[Dict]:
-        query_emb = model.encode(query).tolist()
+        query_emb = get_model().encode(query).tolist()
         results = self.collection.query(
             query_embeddings=[query_emb],
             n_results=min(top_k, self.collection.count()),

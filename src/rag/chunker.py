@@ -1,13 +1,14 @@
 import re
 import numpy as np
-from sentence_transformers import SentenceTransformer
-import streamlit as st
 
-@st.cache_resource
-def load_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+_model = None
 
-model = load_model()
+def get_model():
+    global _model
+    if _model is None:
+        from sentence_transformers import SentenceTransformer
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _model
 
 def fixed_chunking(text: str, chunk_size: int = 200, overlap: int = 20) -> list[str]:
     words = text.split()
@@ -20,6 +21,7 @@ def fixed_chunking(text: str, chunk_size: int = 200, overlap: int = 20) -> list[
     return [c for c in chunks if c.strip()]
 
 def semantic_chunking(text: str, threshold: float = 0.3) -> list[str]:
+    model = get_model()
     sentences = re.split(r'(?<=[.!?])\s+', text.strip())
     sentences = [s.strip() for s in sentences if s.strip()]
     if len(sentences) < 2:
