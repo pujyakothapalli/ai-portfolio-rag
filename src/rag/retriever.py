@@ -3,8 +3,13 @@ import chromadb
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 from typing import List, Dict
+import streamlit as st
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+@st.cache_resource
+def load_embedding_model():
+    return SentenceTransformer("all-MiniLM-L6-v2")
+
+model = load_embedding_model()
 
 class HybridRetriever:
     def __init__(self, collection_name: str = "rag_store"):

@@ -1,8 +1,13 @@
 import re
 import numpy as np
 from sentence_transformers import SentenceTransformer
+import streamlit as st
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+@st.cache_resource
+def load_model():
+    return SentenceTransformer("all-MiniLM-L6-v2")
+
+model = load_model()
 
 def fixed_chunking(text: str, chunk_size: int = 200, overlap: int = 20) -> list[str]:
     words = text.split()
