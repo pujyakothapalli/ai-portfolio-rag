@@ -199,18 +199,3 @@ adaptive-rag/
 **Why no OpenAI dependency?** HuggingFace embeddings (`all-MiniLM-L6-v2`) replace OpenAI embeddings everywhere — in the pipeline and in RAGAS evaluation. This keeps the project fully runnable with just an Anthropic key.
 
 ---
-
-## Part of a 4-Project AI/ML Portfolio
-
-This is Project 1 of a series building toward production-grade AI systems:
-
-| # | Project | Status |
-| --- | --- | --- |
-| 1 | **Adaptive RAG System** (this repo) | ✅ Complete |
-| 2 | Autonomous Research Agent (LangGraph + Tavily) | 🔄 In progress |
-| 3 | TBD | — |
-| 4 | TBD | — |
-
----
-
-*Built by [Pujya Kothapalli](https://github.com/pujyakothapalli) — MS Data Science, University of Maryland*
