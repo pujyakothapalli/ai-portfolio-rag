@@ -1,5 +1,3 @@
-Markdown · README.md
-
 ---
 
 ## title: Adaptive RAG System emoji: 🔍 colorFrom: blue colorTo: purple sdk: streamlit sdk_version: 1.64.0 app_file: app.py pinned: false
