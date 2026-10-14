@@ -1,17 +1,31 @@
 import numpy as np
 import chromadb
 from rank_bm25 import BM25Okapi
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 from typing import List, Dict
-
 _model = None
+_reranker = None
 
 def get_model():
     global _model
     if _model is None:
-        from sentence_transformers import SentenceTransformer
         _model = SentenceTransformer("all-MiniLM-L6-v2")
     return _model
+
+def get_reranker():
+    global _reranker
+    if _reranker is None:
+       _reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+    return _reranker
+
+def rerank(query: str, chunks: list, top_n: int = 3) -> list:
+    if not chunks:
+        return chunks
+    reranker = get_reranker()
+    pairs = [(query, c["content"]) for c in chunks]
+    scores = reranker.predict(pairs)
+    ranked = sorted(zip(scores, chunks), key=lambda x: x[0], reverse=True)
+    return [c for _, c in ranked[:top_n]]
 
 class HybridRetriever:
     def __init__(self, collection_name: str = "rag_store"):

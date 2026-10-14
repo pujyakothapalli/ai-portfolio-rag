@@ -1,0 +1,18 @@
+{
+  "adaptive_rag": {
+    "faithfulness": 0.9394,
+    "answer_relevancy": 0.8225,
+    "context_precision": 0.6644
+  },
+  "naive_rag": {
+    "faithfulness": 0.8594,
+    "answer_relevancy": 0.82,
+    "context_precision": 0.3917
+  },
+  "delta": {
+    "faithfulness": 0.08,
+    "answer_relevancy": 0.0025,
+    "context_precision": 0.2727
+  },
+  "test_cases": 10
+}
