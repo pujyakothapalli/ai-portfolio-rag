@@ -99,7 +99,7 @@ The headline number is context precision (+27.3 pp). Reranking dramatically redu
 | Reranker | `cross-encoder/ms-marco-MiniLM-L-6-v2` | Post-retrieval candidate reranking |
 | Evaluation | RAGAS v0.1.21 | Faithfulness, Answer Relevancy, Context Precision |
 | UI | Streamlit | Frontend |
-| Hosting | Hugging Face Spaces | Live deployment |
+| Hosting | Railway | Live deployment |
 
 ---
 
@@ -113,7 +113,7 @@ The RAGAS evaluation was run locally using Claude as the judge LLM - no OpenAI A
 
 ## How to Use (Live Demo)
 
-1. Open the [live demo](https://huggingface.co/spaces/pujyakothapalli/adaptive-rag)
+1. Open the [live demo](https://ai-portfolio-rag-production.up.railway.app)
 2. Upload a PDF or paste text in the sidebar
 3. Ask any question in the chat
 4. Each response includes:

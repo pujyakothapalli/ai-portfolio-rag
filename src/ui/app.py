@@ -144,11 +144,11 @@ with col2:
     
     3. **Self-RAG Loop** scores confidence and retries if below 70%
     
-    **Query Types:**
-    - 🔵 FACTUAL → Dense, top-3
-    - 🟢 ANALYTICAL → Hybrid, top-7  
-    - 🟡 SUMMARIZATION → Hybrid, top-7
-    - ⚪ CONVERSATIONAL → Dense, top-3
+    **Query Types & Retrieval Strategies:**
+    - 🔵 FACTUAL -> Dense
+    - 🟢 ANALYTICAL -> Hybrid 
+    - 🟡 SUMMARIZATION -> Hybrid
+    - ⚪ CONVERSATIONAL -> Dense
     """)
     
     st.divider()
@@ -156,8 +156,8 @@ with col2:
     st.markdown("""
     | Method | Faithfulness |
     |--------|-------------|
-    | Naive RAG | ~0.65 |
-    | This System | ~0.85 |
+    | Naive RAG | ~0.69 |
+    | This System | ~0.80 |
     
-    *Measured with RAGAS on 20 Q&A pairs*
+    *Measured with RAGAS on 10 Q&A pairs*
     """)
