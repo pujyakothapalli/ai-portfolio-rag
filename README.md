@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-Markdown · README.md
-=======
----
-
-## title: Adaptive RAG System emoji: 🔍 colorFrom: blue colorTo: purple sdk: streamlit sdk_version: 1.64.0 app_file: app.py pinned: false
->>>>>>> 99a65eb43f194d6b5a3dfc3fc88103225256d84a
-
 # 🔍 Adaptive RAG System
 
 A production-grade Retrieval-Augmented Generation pipeline that classifies query intent and routes each question to an optimized retrieval strategy — benchmarked against naive RAG using RAGAS.
