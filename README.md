@@ -50,11 +50,11 @@ Each query type maps to a different retrieval configuration:
 
 ### 4. Cross-Encoder Reranking
 
-Retrieved candidates are re-scored by `cross-encoder/ms-marco-MiniLM-L-6-v2` (sentence-transformers). This is a retrieve-wide-then-rerank pattern - the system over-retrieves (k=6–10) then collapses to the highest-scoring n chunks. This is the biggest driver of the context precision improvement.
+Retrieved candidates are re-scored by `cross-encoder/ms-marco-MiniLM-L-6-v2` (sentence-transformers). This is a retrieve-wide-then-rerank pattern - the system over-retrieves (k=6-10) then collapses to the highest-scoring n chunks. This is the biggest driver of the context precision improvement.
 
 ### 5. Self-RAG Confidence Loop
 
-After generation, Claude scores its own answer confidence (0–100). If below 70, it retries with a broader retrieval strategy before returning.
+After generation, Claude scores its own answer confidence (0-100). If below 70, it retries with a broader retrieval strategy before returning.
 
 ### 6. Generation
 
@@ -194,7 +194,7 @@ adaptive-rag/
 
 **Why classify queries instead of always using hybrid?** Hybrid retrieval is great for broad questions but can dilute precision on factual lookups. Dense-only on factual queries gets tighter, more relevant chunks.
 
-**Why rerank instead of just retrieving a smaller k?** A cross-encoder scores query–chunk pairs jointly (not independently), catching relevance signals that embedding similarity misses. Over-retrieving then reranking consistently outperforms retrieving a small k directly.
+**Why rerank instead of just retrieving a smaller k?** A cross-encoder scores query-chunk pairs jointly (not independently), catching relevance signals that embedding similarity misses. Over-retrieving then reranking consistently outperforms retrieving a small k directly.
 
 **Why no OpenAI dependency?** HuggingFace embeddings (`all-MiniLM-L6-v2`) replace OpenAI embeddings everywhere - in the pipeline and in RAGAS evaluation. This keeps the project fully runnable with just an Anthropic key.
 
