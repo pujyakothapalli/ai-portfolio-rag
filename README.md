@@ -1,19 +1,19 @@
-# 🔍 Adaptive RAG System
+# Adaptive RAG System
 
-A production-grade Retrieval-Augmented Generation pipeline that classifies query intent and routes each question to an optimized retrieval strategy — benchmarked against naive RAG using RAGAS.
+A production-grade Retrieval-Augmented Generation pipeline that classifies query intent and routes each question to an optimized retrieval strategy - benchmarked against naive RAG using RAGAS.
 
-[**🚀 Live Demo on Railway**](https://ai-portfolio-rag-production.up.railway.app)
+[**Live Demo on Railway**](https://ai-portfolio-rag-production.up.railway.app)
 
 ---
 
 ## What It Does
 
-Most RAG systems treat every question the same way: retrieve top-5 chunks, generate an answer. That works until you mix question types — a factual lookup needs tight, precise chunks; an analytical question needs broad context; a summarization task needs near-complete coverage.
+Most RAG systems treat every question the same way: retrieve top-5 chunks, generate an answer. That works until you mix question types - a factual lookup needs tight, precise chunks; an analytical question needs broad context; a summarization task needs near-complete coverage.
 
 This system solves that by classifying each query first, then routing it to the retrieval strategy that fits:
 
 ```
-Query → Classifier → Router → [Dense | Hybrid] Retriever → Cross-Encoder Reranker → Generator → Answer
+Query -> Classifier -> Router -> [Dense | Hybrid] Retriever -> Cross-Encoder Reranker -> Generator -> Answer
 ```
 
 ---
@@ -50,7 +50,7 @@ Each query type maps to a different retrieval configuration:
 
 ### 4. Cross-Encoder Reranking
 
-Retrieved candidates are re-scored by `cross-encoder/ms-marco-MiniLM-L-6-v2` (sentence-transformers). This is a retrieve-wide-then-rerank pattern — the system over-retrieves (k=6–10) then collapses to the highest-scoring n chunks. This is the biggest driver of the context precision improvement.
+Retrieved candidates are re-scored by `cross-encoder/ms-marco-MiniLM-L-6-v2` (sentence-transformers). This is a retrieve-wide-then-rerank pattern - the system over-retrieves (k=6–10) then collapses to the highest-scoring n chunks. This is the biggest driver of the context precision improvement.
 
 ### 5. Self-RAG Confidence Loop
 
@@ -64,7 +64,7 @@ Claude generates the final answer with retrieved + reranked context, citing sour
 
 ## Evaluation Results (RAGAS)
 
-Benchmarked on **10 test cases** grounded in *"Explainable AI in Healthcare"* (Pawar, O'Shea, Rea, O'Reilly — Cork Institute of Technology) using **RAGAS v0.1.21** with Claude as judge and `all-MiniLM-L6-v2` for embeddings (no OpenAI dependency).
+Benchmarked on **10 test cases** grounded in *"Explainable AI in Healthcare"* (Pawar, O'Shea, Rea, O'Reilly - Cork Institute of Technology) using **RAGAS v0.1.21** with Claude as judge and `all-MiniLM-L6-v2` for embeddings (no OpenAI dependency).
 
 ### Metrics Explained
 
@@ -83,7 +83,7 @@ Benchmarked on **10 test cases** grounded in *"Explainable AI in Healthcare"* (P
 
 **Naive RAG baseline**: always hybrid top-5, no query classification, no reranking.
 
-The headline number is context precision (+27.3 pp). Reranking dramatically reduces retrieved noise — the system surfaces the right chunks rather than a mix of relevant and tangential ones. Faithfulness at 0.94 means the answers are closely grounded in source material.
+The headline number is context precision (+27.3 pp). Reranking dramatically reduces retrieved noise - the system surfaces the right chunks rather than a mix of relevant and tangential ones. Faithfulness at 0.94 means the answers are closely grounded in source material.
 
 ---
 
@@ -105,9 +105,9 @@ The headline number is context precision (+27.3 pp). Reranking dramatically redu
 
 ## Hosting
 
-The app is deployed on **Railway** as a containerized Streamlit service. The `ANTHROPIC_API_KEY` is set as a Railway environment variable. The ChromaDB vector store is ephemeral per session — documents you upload are indexed in-memory and persist for the session. For a persistent deployment, swap ChromaDB for a hosted vector DB (Pinecone, Weaviate, etc.).
+The app is deployed on **Railway** as a containerized Streamlit service. The `ANTHROPIC_API_KEY` is set as a Railway environment variable. The ChromaDB vector store is ephemeral per session - documents you upload are indexed in-memory and persist for the session. For a persistent deployment, swap ChromaDB for a hosted vector DB (Pinecone, Weaviate, etc.).
 
-The RAGAS evaluation was run locally using Claude as the judge LLM — no OpenAI API key required.
+The RAGAS evaluation was run locally using Claude as the judge LLM - no OpenAI API key required.
 
 ---
 
@@ -164,7 +164,7 @@ Open `http://localhost:8501` in your browser.
 python eval/run_eval.py
 ```
 
-Results are written to `eval/results.json`. Requires `ANTHROPIC_API_KEY` — uses Claude as the RAGAS judge (no OpenAI key needed).
+Results are written to `eval/results.json`. Requires `ANTHROPIC_API_KEY` - uses Claude as the RAGAS judge (no OpenAI key needed).
 
 ---
 
@@ -175,7 +175,7 @@ adaptive-rag/
 ├── app.py                    # Streamlit UI
 ├── src/
 │   └── rag/
-│       ├── pipeline.py       # Main query() entrypoint — routing + reranking
+│       ├── pipeline.py       # Main query() entrypoint - routing + reranking
 │       ├── classifier.py     # Claude-based query type classifier
 │       ├── retriever.py      # HybridRetriever + CrossEncoder rerank()
 │       ├── generator.py      # Claude generation + Self-RAG scoring
@@ -196,6 +196,6 @@ adaptive-rag/
 
 **Why rerank instead of just retrieving a smaller k?** A cross-encoder scores query–chunk pairs jointly (not independently), catching relevance signals that embedding similarity misses. Over-retrieving then reranking consistently outperforms retrieving a small k directly.
 
-**Why no OpenAI dependency?** HuggingFace embeddings (`all-MiniLM-L6-v2`) replace OpenAI embeddings everywhere — in the pipeline and in RAGAS evaluation. This keeps the project fully runnable with just an Anthropic key.
+**Why no OpenAI dependency?** HuggingFace embeddings (`all-MiniLM-L6-v2`) replace OpenAI embeddings everywhere - in the pipeline and in RAGAS evaluation. This keeps the project fully runnable with just an Anthropic key.
 
 ---
